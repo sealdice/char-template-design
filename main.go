@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"gopkg.in/yaml.v3"
 	"os"
@@ -129,13 +130,18 @@ func main() {
 	}
 
 	defaultVals := CharacterTemplate{
-		KeyName:           "coc7",
-		FullName:          "克苏鲁的呼唤第七版",
-		Version:           "1.0.0",
-		UpdatedTime:       "20230212",
-		Authors:           []string{"木落", "月森优姬", "于言诺"},
-		NameTemplateKeys:  []string{"coc", "coc7"},
-		NameTemplateValue: "{$t玩家_RAW} SAN{理智} HP{生命值}/{生命值上限} DEX{敏捷}",
+		KeyName:     "coc7",
+		FullName:    "克苏鲁的呼唤第七版",
+		Version:     "1.0.0",
+		UpdatedTime: "20230214",
+		Authors:     []string{"木落", "月森优姬", "于言诺"},
+		TemplateVer: "1.0",
+		NameTemplate: map[string]NameTemplateItem{
+			"coc": {
+				Template: "{$t玩家_RAW} SAN{理智} HP{生命值}/{生命值上限} DEX{敏捷}",
+				HelpText: "自动设置coc名片",
+			},
+		},
 
 		Defaults: Coc7DefaultAttrs,
 		DefaultsComputed: map[string]string{
@@ -258,7 +264,7 @@ func main() {
 			"潜水":     {"潛水"},
 		},
 
-		ShowSettings: ShowSettings{
+		AttrSettings: AttrSettings{
 			Top:     []string{"力量", "敏捷", "体质", "体型", "外貌", "智力", "意志", "教育", "理智", "db", "克苏鲁神话", "生命值", "魔法值"},
 			SortBy:  "name",
 			Ignores: []string{"生命值上限"},
@@ -269,7 +275,7 @@ func main() {
 			},
 		},
 
-		Texts: &TextTemplateWithWeightDict{
+		TextMap: &TextTemplateWithWeightDict{
 			"COC": {
 				"设置测试_成功": {
 					{"设置完成", 1},
@@ -283,5 +289,12 @@ func main() {
 		fmt.Println(err)
 	} else {
 		os.WriteFile("./coc7角色卡模板.yaml", buf, 0644)
+	}
+
+	buf, err = json.MarshalIndent(defaultVals, "", "  ")
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		os.WriteFile("./coc7角色卡模板.json", buf, 0644)
 	}
 }

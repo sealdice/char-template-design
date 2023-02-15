@@ -1,23 +1,27 @@
-key-name: coc7
-full-name: 克苏鲁的呼唤第七版
+keyName: coc7
+fullName: 克苏鲁的呼唤第七版
 authors:
     - 木落
     - 月森优姬
     - 于言诺
 version: 1.0.0
-updatedTime: "20230212"
-name-template-keys: [coc, coc7]
-name-template-value: '{$t玩家_RAW} SAN{理智} HP{生命值}/{生命值上限} DEX{敏捷}'
-show-settings:
+updatedTime: "20230214"
+templateVer: "1.0"
+nameTemplate:
+    coc:
+        template: '{$t玩家_RAW} SAN{理智} HP{生命值}/{生命值上限} DEX{敏捷}'
+        helpText: 自动设置coc名片
+attrSettings:
     top: [力量, 敏捷, 体质, 体型, 外貌, 智力, 意志, 教育, 理智, db, 克苏鲁神话, 生命值, 魔法值]
     sortBy: name
     ignores:
         - 生命值上限
-        - 魔法值上限
-    show-as:
+    showAs:
         db: '{ (力量 + 体型) < 65 ? ''-2'', (力量 + 体型) < 85 ? ''-1'', (力量 + 体型) < 125 ? ''0'', (力量 + 体型) < 165 ? ''1d4'', (力量 + 体型) < 205 ? ''1d6'', 1 ? `{((力量 + 体型 - 205) / 80 + 2)}d6` }'
         生命值: '{生命值}/{生命值上限}'
-1defaults:
+        魔法值: '{魔法值}/{魔法值上限}'
+    setter: {}
+defaults:
     乔装: 5
     书法: 5
     人类学: 1
@@ -126,7 +130,7 @@ show-settings:
     鞭: 5
     飞行器: 1
     骑术: 5
-defaults-computed:
+defaultsComputed:
     db: '{(力量 + 体型) < 65 ? -2, (力量 + 体型) < 85 ? -1, (力量 + 体型) < 125 ? 0, (力量 + 体型) < 165 ? 1d14, (力量 + 体型) < 205 ? 1d6, 1 ? ((力量 + 体型 - 205) / 80 + 2)d6 }'
     母语: 教育
     生命值上限: (体质 + 体型) / 10
@@ -511,8 +515,14 @@ alias:
         - 魔法
         - 魔力
         - 魔力值
-texts:
+    魔法值上限:
+        - mpmax
+        - 魔法上限
+        - 蓝量上限
+        - 藍量上限
+textMap:
     COC:
         设置测试_成功:
             - - 设置完成
               - 1
+TextMapHelpInfo: null
